@@ -34,20 +34,6 @@ void setupSigFox() {
   String version = SigFox.SigVersion();
   String ID = SigFox.ID();
   String PAC = SigFox.PAC();
-
-  // Display module informations
-  Serial.println("MKRFox1200 Sigfox first configuration");
-  Serial.println("SigFox FW version " + version);
-  Serial.println("ID  = " + ID);
-  Serial.println("PAC = " + PAC);
-
-  Serial.println("");
-
-  Serial.print("Module temperature: ");
-  Serial.println(SigFox.internalTemperature());
-
-  Serial.println("Register your board on https://backend.sigfox.com/activate with provided ID and PAC");
-
   delay(100);
 
   // Send the module to the deepest sleep
@@ -56,31 +42,20 @@ void setupSigFox() {
   Serial.println("Type the message to be sent");
   while (!Serial.available());
 
-  String message;
-  while (Serial.available()) {
-    message += (char)Serial.read();
-  }
-
-  // Every SigFox packet cannot exceed 12 bytes
-  // If the string is longer, only the first 12 bytes will be sent
-
+  String message = "Collar:1";
   if (message.length() > 12) {
     Serial.println("Message too long, only first 12 bytes will be sent");
   }
 
-  Serial.println("Sending " + message);
-
   // Remove EOL
   message.trim();
 
-  // Example of message that can be sent
-  // sendString(message);
-
-  Serial.println("Getting the response will take up to 50 seconds");
-  Serial.println("The LED will blink while the operation is ongoing");
-
   // Example of send and read response
   sendStringAndGetResponse(message);
+}
+
+void sigFox() {
+  
 }
 
 void setupRadioWave() {
